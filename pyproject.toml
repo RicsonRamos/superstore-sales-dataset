@@ -15,6 +15,7 @@ dependencies = [
     "scikit-learn>=1.5.0",
     "matplotlib>=3.9.0",
     "kagglehub>=1.0.2",
+    "streamlit>=1.66.0",
 ]
 
 [dependency-groups]
@@ -75,6 +76,7 @@ venv = ".venv"
 venvPath = "."
 executionEnvironments = [{ root = "src" }]
 reportMissingTypeStubs = false
+extraPaths = ["./src/superstore_sales_dataset"]
 
 [tool.ty.environment]
 python-version = "3.12"
