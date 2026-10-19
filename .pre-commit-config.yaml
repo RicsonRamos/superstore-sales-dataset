@@ -1,0 +1,58 @@
+default_install_hook_types: [pre-commit, pre-push]
+default_stages: [pre-commit]
+
+repos:
+  # 1. Checagens Gerais de Higiene de Código
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+        name: Remover espaços em branco no final das linhas
+      - id: end-of-file-fixer
+        name: Garantir linha em branco no final do arquivo
+      - id: check-yaml
+        name: Validar sintaxe de arquivos YAML
+      - id: check-toml
+        name: Validar sintaxe de arquivos TOML
+      - id: check-added-large-files
+        name: Bloquear inclusão acidental de arquivos grandes
+        args: ["--maxkb=1000"]
+      - id: check-merge-conflict
+        name: Impedir commit de marcadores de conflito do Git
+      - id: check-case-conflict
+        name: Impedir conflitos de maiúsculas e minúsculas em sistemas de arquivos
+
+  # 2. Limpeza Automática de Saídas de Jupyter Notebooks
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.8.1
+    hooks:
+      - id: nbstripout
+        name: Limpar saídas visuais e dados sensíveis de Jupyter Notebooks
+
+  # 3. Astral Ruff (Linter e Formatter em Rust)
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.9.10
+    hooks:
+      - id: ruff
+        name: Executar Ruff Linter
+        args: [--fix, --exit-non-zero-on-fix]
+      - id: ruff-format
+        name: Executar Ruff Formatter
+
+  # 4. Checagem Estática de Tipos e Testes Locais via UV
+  - repo: local
+    hooks:
+      - id: pyright
+        name: Checagem estática de tipos com Pyright
+        entry: uv run pyright
+        language: system
+        types: [python]
+        pass_filenames: false
+
+      - id: pytest
+        name: Executar testes automatizados com Pytest
+        entry: uv run pytest
+        language: system
+        types: [python]
+        pass_filenames: false
+        stages: [pre-push]

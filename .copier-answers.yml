@@ -1,0 +1,9 @@
+# Não edite manualmente; usado pelo comando 'copier update'
+_commit: v1.3.0
+_src_path: gh:RicsonRamos/ds-template
+author_email: ricsonramos@outlook.com
+author_name: Ricson
+description: Projeto de Ciência de Dados
+package_name: superstore_sales_dataset
+project_name: superstore-sales-dataset
+python_version: '3.12'

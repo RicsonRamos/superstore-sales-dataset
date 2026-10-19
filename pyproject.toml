@@ -1,0 +1,95 @@
+[project]
+name = "superstore-sales-dataset"
+version = "0.1.0"
+description = "Projeto de Ciência de Dados"
+readme = "README.md"
+license = "MIT"
+authors = [{ name = "Ricson", email = "ricsonramos@outlook.com" }]
+requires-python = ">=3.12"
+dependencies = [
+    "python-dotenv>=1.1.0",
+    "numpy>=2.1.0",
+    "pandas>=2.2.0",
+    "pyarrow>=18.0.0",
+    "polars>=1.15.0",
+    "scikit-learn>=1.5.0",
+    "matplotlib>=3.9.0",
+    "kagglehub>=1.0.2",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.9.0",
+    "pyright>=1.1.390",
+    "ty>=0.0.80",
+    "pytest>=8.3.0",
+    "pytest-xdist>=3.6.0",
+    "pandas-stubs>=2.2.0",
+]
+notebooks = [
+    "ipykernel>=6.29.0",
+    "jupyterlab>=4.3.0",
+    "seaborn>=0.13.0",
+]
+
+[project.scripts]
+superstore-sales-dataset = "superstore_sales_dataset.config:info"
+
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+indent-width = 4
+extend-include = ["*.ipynb"]
+
+[tool.ruff.lint]
+select = [
+    "B", "C4", "E", "F", "I", "ICN", "N", "NPY",
+    "PD", "PERF", "PT", "RET", "RUF", "S", "SIM",
+    "T10", "TRY", "UP", "W",
+]
+ignore = [
+    "T201", "COM812", "ISC001", "N803", "N806",
+    "S301", "S311",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["S101", "SLF001", "FBT001"]
+"notebooks/**/*.ipynb" = ["E402", "B018", "F401"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "lf"
+docstring-code-format = true
+
+[tool.ruff.lint.isort]
+known-first-party = ["superstore_sales_dataset"]
+
+[tool.pyright]
+typeCheckingMode = "standard"
+pythonVersion = "3.12"
+include = ["src", "tests"]
+exclude = ["notebooks"]
+venv = ".venv"
+venvPath = "."
+executionEnvironments = [{ root = "src" }]
+reportMissingTypeStubs = false
+
+[tool.ty.environment]
+python-version = "3.12"
+
+[tool.ty.src]
+include = ["src", "tests"]
+exclude = ["notebooks/**"]
+
+[tool.pytest.ini_options]
+addopts = "-ra --color=yes --tb=short --strict-markers"
+pythonpath = ["src"]
+testpaths = ["tests"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/superstore_sales_dataset"]
