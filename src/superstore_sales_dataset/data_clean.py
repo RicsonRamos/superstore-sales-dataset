@@ -3,6 +3,14 @@
 import pandas as pd
 
 
+class MissingRequiredColumnsError(ValueError):
+    """Raised when required dataset columns are missing."""
+
+    def __init__(self, columns: list[str]) -> None:
+        self.columns = columns
+        super().__init__(f"Missing required dataset columns: {columns}")
+
+
 def data_prepare(sales_df: pd.DataFrame) -> pd.DataFrame:
     """Clean and prepare Superstore sales data in memory."""
 
@@ -21,8 +29,7 @@ def data_prepare(sales_df: pd.DataFrame) -> pd.DataFrame:
     missing_columns = required_columns.difference(sales_df.columns)
 
     if missing_columns:
-        raise ValueError(f"Missing required dataset columns: {sorted(missing_columns)}")  # noqa: TRY003
-
+        raise MissingRequiredColumnsError(sorted(missing_columns))
     # Convert dates to datetime.
     for column in ["Order Date", "Ship Date"]:
         sales_df[column] = pd.to_datetime(
