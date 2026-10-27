@@ -88,3 +88,6 @@ ehthumbs.db
 *.swp
 *.swo
 *~
+
+# Local agent configs
+.agents/
